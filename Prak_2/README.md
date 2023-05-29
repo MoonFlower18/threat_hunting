@@ -1,0 +1,70 @@
+# Сбор и аналитическая обработка информации о сетевом трафике
+
+## Цель работы
+
+1. Развить практические навыки использования современного стека инструментов сбора и аналитической обработки информации о сетевом трафике.
+2. Освоить базовые подходы блокировки нежелательного сетевого трафика.
+3. Закрепить знания о современных сетевых протоколах прикладного уровня.
+
+## Ход работы
+
+1. C помощью Wireshark был собран сетевой трафик объёмом 446 Мб и записан в файл traffic.pcapng.
+
+![Image alt](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_2/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/%D0%A1%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2%D0%B0%20%D1%81%D0%BE%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE%20%D1%82%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B0.png)
+
+2. С помощью Zeek была выделена метаинформация сетевого трафика (файлы dns.log и http.log).
+
+3. Затем получаем список нежелательного трафика:
+
+```{bash}
+mkdir hosts
+wget -q https://github.com/StevenBlack/hosts/raw/master/data/add.2o7Net/hosts -O hosts/hosts.1
+wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/data/KADhosts/hosts -O hosts/hosts.2
+wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/data/yoyo.org/hosts -O hosts/hosts.3
+wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/data/tiuxo/hosts -O hosts/hosts.4
+wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/data/URLHaus/hosts -O hosts/hosts.5
+wget -q https://raw.githubusercontent.com/StevenBlack/hosts/master/data/mvps.org/hosts -O hosts/hosts.6
+sort hosts/hosts* | grep -Eo '^([^\\"'\''#]|\\.|"([^\\"]|\\.)*"|'\''[^'\'']*'\'')*' | uniq > evil_hosts
+rm -rf hosts
+```
+В результате был получен файл evil_hosts.
+
+4. Получим список посещенных доменов:
+
+```{python}
+with open("dns.log") as f:
+    lines_dns = f.readlines()
+    dns_hosts = [line.split()[9] for line in lines_dns if len(line.split()) > 9]
+f.close()
+```
+
+5. Получим список нежелательного трафика:
+
+```{python}
+with open("evil_hosts.data") as f:
+    lines_evil = f.readlines()
+    evil_hosts = [line.split()[1] for line in lines_evil if len(line.split()) > 1]
+f.close()
+```
+
+6. Получим количество совпадений DNS с нежелательным трафиком и процент нежелательного трафика:
+
+```{python}
+c=0
+for i in range(len(dns_hosts)):
+    for j in range(len(evil_hosts)):
+        if dns_hosts[i] == evil_hosts[j]:
+            c += 1
+evil_dns = c/(len(evil_hosts))
+print("Кол-во совпадений DNS имен из загруженных списков трафика:", c)
+print("Процент нежелательного трафика:", evil_dns)
+```
+![Image alt](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_2/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/%D0%98%D1%82%D0%BE%D0%B3%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D1%8B%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D1%8B.png)
+
+## Оценка результата
+
+В результате лабораторной работы мы смогли определить нежелательный трафик и найти его процент от общего количества.
+
+## Вывод
+
+Таким образом, был освоен метод анализа сетевого трафика при помощи специальных программ и утилит.
