@@ -16,7 +16,8 @@ sudo sysctl -w vm.max_map_count=1048575
 ```
 
 2. В новой директории был создан файл .env для хранения параметров окружения.
-- Содержание файла .env:
+
+Содержание файла .env:
 ```
 OPENCTI_ADMIN_EMAIL=admin\@opencti.io
 
@@ -50,7 +51,8 @@ ELASTIC_MEMORY_SIZE=4G
 ```         
 
 3. В этой же директории создан файл docker-compose.yml
-- Запуск контейнера с помощью команды:
+
+Запуск контейнера с помощью команды:
 ```
 sudo docker-compose up -d
 
