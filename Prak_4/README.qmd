@@ -20,6 +20,7 @@ sudo sysctl -w vm.max_map_count=1048575
 ```
 
 2. В новой директории был создан файл .env для хранения параметров окружения.
+
 Содержание файла .env:
 ```
 OPENCTI_ADMIN_EMAIL=admin\@opencti.io
@@ -54,6 +55,7 @@ ELASTIC_MEMORY_SIZE=4G
 ```         
 
 3. В этой же директории создан файл docker-compose.yml
+
 Запуск контейнера с помощью команды:
 ```
 sudo docker-compose up -d
@@ -105,7 +107,7 @@ Creating lab4_worker_2 ... done
 Creating lab4_worker_1 ... done
 ``` 
 
-4.  Заходим в веб-интерфейс OpenCTI [localhost:8088]
+4.  Заходим в веб-интерфейс OpenCTI [ localhost:8088 ]
 
 Входим по данным пользователя:
 
