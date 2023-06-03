@@ -103,7 +103,7 @@ Creating lab4_worker_2 ... done
 Creating lab4_worker_1 ... done
 ``` 
 
-4.  Заходим в веб-интерфейс OpenCTI [localhost:8088]
+4.  Заходим в веб-интерфейс OpenCTI [ localhost:8088 ]
 
 Входим по данным пользователя:
 
