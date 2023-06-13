@@ -66,19 +66,19 @@ jobs:
 
 ## Пример автоматического изменения сайта
 
-Вот так выглядел кусочек сайта до изменения:
+- Вот так выглядел кусочек сайта до изменения:
 
 ![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/5.png)
 
-Слегка изменим кусочек кода в файле `index.html`, добавив восклицательный знак и смайлик улыбки:
+- Слегка изменим кусочек кода в файле `index.html`, добавив восклицательный знак и смайлик улыбки:
 
 ![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/6.png)
 
-Проверим во вкладке `Actions` запущенный процесс:
+- Проверим во вкладке `Actions` запущенный процесс:
 
 ![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/7.png)
 
-Как итог, наши изменения перенеслись на сайт:
+- Как итог, наши изменения перенеслись на сайт:
 
 ![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/8.png)
 
