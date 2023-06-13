@@ -1,0 +1,91 @@
+#Работа с GitHub Actions
+
+## Цель
+
+Настроить автоматическое обновление сайта, который был создан в практической работе №7, при изменении кода в репозитории с помощью GitHub Actions.
+
+## Шаги
+
+1. В настройках изменим источник на `GitHub Actions` *(Settings -> Pages -> Build and deployment -> Source)*.
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/1.png)
+
+2. Переходим во вкладку `Actions` и нажимаем `New workflow`.
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/2.png)
+
+3. Далее в разделе выбираем `set up workflow yourself`.
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/3.png)
+
+4. После этого у нас создался файл с расширением `.yml`. Заполним данный файл информацией, полученной из открытых источников.
+
+```
+name: Pr_8
+
+on:
+  push:
+    branches: 
+     - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v1.0.8
+        
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          tinytex: true
+          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    permissions:
+      pages: write     
+      id-token: write 
+   
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+```
+
+5. Сохраняем файл и проверяем наличие ошибок во вкладке `Actions`. Перейдём к ссылке на наш сайт *(Settings -> Pages)*
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/4.png)
+
+## Пример автоматического изменения сайта
+
+Вот так выглядел кусочек сайта до изменения:
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/5.png)
+
+Слегка изменим кусочек кода в файле `index.html`, добавив восклицательный знак и смайлик улыбки:
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/6.png)
+
+Проверим во вкладке `Actions` запущенный процесс:
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/7.png)
+
+Как итог, наши изменения перенеслись на сайт:
+
+![image](https://github.com/MoonFlower18/threat_hunting/blob/main/Prak_8/%D0%A1%D0%BA%D1%80%D0%B8%D0%BD%D1%88%D0%BE%D1%82%D1%8B/8.png)
+
+## Ссылки на ресурсы
+
+- Репозиторий: [https://github.com/MoonFlower18/quarto_site](https://github.com/MoonFlower18/quarto_site)
+- Сайт: [https://moonflower18.github.io/quarto_site/](https://moonflower18.github.io/quarto_site/)
+
+## Вывод
+В ходе выполнения данной работы, было настроено автоматическое обновление сайта с помощью GitHub Actions. Автоматизируя обновление веб-сайтов, это значительно упрощает и ускоряет процесс разработки сайта. 
