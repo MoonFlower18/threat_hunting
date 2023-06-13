@@ -1,4 +1,4 @@
-###Работа с GitHub Actions
+# Работа с GitHub Actions
 
 ## Цель
 
